@@ -1,5 +1,6 @@
 import streamlit as st
 import pymupdf
+from document_processing import search_document
 
 # Configure the application
 st.set_page_config(
@@ -29,6 +30,8 @@ if uploaded_file is not None:
     st.write("Filename:", uploaded_file.name)
     st.write("File size:", uploaded_file.size, "bytes")
 
+    keyword = st.text_input("Keyword: ")
+
     # Open the uploaded PDF
     pdf_document = pymupdf.open(
         stream=uploaded_file.getvalue(),
@@ -40,6 +43,10 @@ if uploaded_file is not None:
 
     for page in pdf_document:
         extracted_text += page.get_text()
+
+    if keyword:
+        results = search_document(extracted_text, keyword)
+        st.text(results)
 
     # Display extraction results
     st.subheader("Document Analysis")
