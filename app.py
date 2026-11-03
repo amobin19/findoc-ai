@@ -46,8 +46,13 @@ if uploaded_file is not None:
 
     if keyword:
         results = search_document(extracted_text, keyword)
-        st.text(results)
-
+        items_found = len(results)
+        st.write(items_found, " matches found.")
+        if items_found == 0:
+            st.write("No matching results found.")
+        for line in results:
+            st.text(line)
+    
     # Display extraction results
     st.subheader("Document Analysis")
 
