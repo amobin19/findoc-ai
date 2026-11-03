@@ -1,6 +1,6 @@
 import streamlit as st
 import pymupdf
-from document_processing import search_document
+from document_processing import search_document,split_text,sentence_extract
 
 # Configure the application
 st.set_page_config(
@@ -11,9 +11,7 @@ st.set_page_config(
 
 # Application header
 st.title("📄 FinDoc AI")
-
 st.subheader("AI-Powered Financial Document Analyst")
-
 st.write(
     "Upload financial documents and explore their contents."
 )
@@ -26,7 +24,6 @@ uploaded_file = st.file_uploader(
 
 if uploaded_file is not None:
     st.success("PDF uploaded successfully!")
-
     st.write("Filename:", uploaded_file.name)
     st.write("File size:", uploaded_file.size, "bytes")
 
@@ -55,9 +52,12 @@ if uploaded_file is not None:
     
     # Display extraction results
     st.subheader("Document Analysis")
-
     st.write("Total pages:", len(pdf_document))
     st.write("Characters extracted:", len(extracted_text))
+
+    # Display the summary of the text
+    summary = st.number_input("How many sentences would you like exctracted? ",min_value=0,value=0,step=1)
+    st.write(sentence_extract(extracted_text,summary))
 
     # Preveiw extracted text
     with st.expander("View extracted PDF text"):
