@@ -1,6 +1,6 @@
 import streamlit as st
 import pymupdf
-from document_processing import search_document,split_text,sentence_extract
+from document_processing import search_document,sentence_extract
 
 # Configure the application
 st.set_page_config(
